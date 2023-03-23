@@ -2,12 +2,81 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/vite.svg"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>TODOS</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <h1>TODOS</h1>
+    <div id="container">
+      <form id="form">
+        <input
+          type="checkbox"
+          id="toggle-all"
+          class="toggle-all"
+        />
+
+        <input
+          type="text"
+          id="new-task-input"
+          placeholder="What needs to be done?"
+        />
+      </form>
+      <ul id="task-list">
+        <li>
+          <input
+            type="checkbox"
+            class="checkbox"
+          />
+          <input
+            id="todo-item"
+            type="text"
+            value="Taste JavaScript"
+          />
+        </li>
+        <li>
+          <input
+            type="checkbox"
+            class="checkbox"
+          />
+          <input
+            id="todo-item"
+            type="text"
+            value="Code furiously"
+          />
+        </li>
+        <li>
+          <input
+            type="checkbox"
+            class="checkbox"
+          />
+          <input
+            id="todo-item"
+            type="text"
+            value="Write tutorials"
+          />
+        </li>
+      </ul>
+      <footer>
+        <span>6 items left</span>
+        <div class="buttonContainer">
+          <button>All</button>
+          <button>Active</button>
+          <button>Completed</button>
+        </div>
+        <button class="clearBtn">Clear Completed</button>
+      </footer>
+    </div>
+    <script
+      type="module"
+      src="/src/main.ts"
+    ></script>
   </body>
 </html>
