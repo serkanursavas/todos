@@ -16,10 +16,14 @@ type Task = {
 const tasks: Task[] = loadTasksHandler()
 if (tasks != null) tasks.forEach(task => addTaskHandler(task))
 
-function unCompletedCountHandler(tasks: Task[]) {
-  itemsLeft.textContent = tasks.filter(task => task.isFinished == false).length.toString() + ' items left'
+function unCompletedCountHandler() {
+  const data = loadTasksHandler()
+  const count = data.filter(task => task.isFinished == false).length
+  itemsLeft.textContent = count.toString() + ' items left'
+  if (count == 0) toggleAllBtn.classList.add('clicked')
+  else toggleAllBtn.classList.remove('clicked')
 }
-unCompletedCountHandler(tasks)
+unCompletedCountHandler()
 
 form.addEventListener('submit', e => {
   e.preventDefault()
@@ -32,25 +36,28 @@ form.addEventListener('submit', e => {
     isFinished: false
   }
 
-  tasks.push(newTask)
-  saveTasksHandler(tasks)
-  unCompletedCountHandler(tasks)
+  const data = loadTasksHandler()
+  data.push(newTask)
+  saveTasksHandler(data)
+  unCompletedCountHandler()
 
   addTaskHandler(newTask)
   formInput.value = ''
 })
 
 toggleAllBtn.addEventListener('click', () => {
-  if (tasks.filter(task => task.isFinished == false).length > 0) {
-    const updatedArray = tasks.map(item => {
+  const data = loadTasksHandler()
+  if (data.filter(task => task.isFinished == false).length > 0) {
+    const updatedArray = data.map(item => {
       item.isFinished = true
       return item
     })
     saveTasksHandler(updatedArray)
     taskList.textContent = ''
     updatedArray.forEach(item => addTaskHandler(item))
+    unCompletedCountHandler()
   } else {
-    const updatedArray = tasks.map(item => {
+    const updatedArray = data.map(item => {
       item.isFinished = false
       return item
     })
@@ -58,6 +65,7 @@ toggleAllBtn.addEventListener('click', () => {
     taskList.textContent = ''
     updatedArray.forEach(item => addTaskHandler(item))
   }
+  unCompletedCountHandler()
 })
 
 function addTaskHandler(newTask: Task) {
@@ -74,23 +82,27 @@ function addTaskHandler(newTask: Task) {
   if (newTask.isFinished == true) {
     taskInput.classList.add('completed-task')
     checkbox.checked = true
-    unCompletedCountHandler(tasks)
+    unCompletedCountHandler()
   }
 
   checkbox.addEventListener('click', () => {
     newTask.isFinished = !newTask.isFinished
-    const changedItem = tasks.findIndex(item => item.id == newTask.id)
-    tasks[changedItem].isFinished = newTask.isFinished
-    saveTasksHandler(tasks)
-    unCompletedCountHandler(tasks)
+    const data = loadTasksHandler()
+    const changedItem = data.findIndex(item => item.id == newTask.id)
+    data[changedItem].isFinished = newTask.isFinished
+    saveTasksHandler(data)
+    unCompletedCountHandler()
     taskInput.classList.toggle('completed-task')
   })
 
   deleteBtn.addEventListener('click', () => {
-    const removeItem = tasks.findIndex(item => item.id == newTask.id)
-    tasks.splice(removeItem, 1)
-    saveTasksHandler(tasks)
-    unCompletedCountHandler(tasks)
+    const data = loadTasksHandler()
+    const removeItem = data.findIndex(item => item.id == newTask.id)
+    data.splice(removeItem, 1)
+    saveTasksHandler(data)
+    console.log(data)
+
+    unCompletedCountHandler()
     item.remove()
   })
 
@@ -102,8 +114,41 @@ function saveTasksHandler(tasks: Task[]) {
   localStorage.setItem('TASKS', JSON.stringify(tasks))
 }
 
-function loadTasksHandler() {
+function loadTasksHandler(): Task[] {
   const taskJSON = localStorage.getItem('TASKS')
   if (taskJSON === null || taskJSON === '') return []
   return JSON.parse(taskJSON)
 }
+
+const allBtn = document.getElementById('all-btn') as HTMLButtonElement
+const activeBtn = document.getElementById('active-btn') as HTMLButtonElement
+const completedBtn = document.getElementById('completed-btn') as HTMLButtonElement
+const clearCompletedBtn = document.getElementById('clear-completed') as HTMLButtonElement
+
+allBtn.addEventListener('click', () => {
+  taskList.textContent = ''
+  const data = loadTasksHandler()
+  data.forEach(item => addTaskHandler(item))
+})
+
+activeBtn.addEventListener('click', () => {
+  taskList.textContent = ''
+  const data = loadTasksHandler()
+  const activeTasks = data.filter(item => item.isFinished == false)
+  activeTasks.forEach(item => addTaskHandler(item))
+})
+
+completedBtn.addEventListener('click', () => {
+  taskList.textContent = ''
+  const data = loadTasksHandler()
+  const completedTasks = data.filter(item => item.isFinished == true)
+  completedTasks.forEach(item => addTaskHandler(item))
+})
+
+clearCompletedBtn.addEventListener('click', () => {
+  taskList.textContent = ''
+  const data = loadTasksHandler()
+  const updatedArray = data.filter(item => item.isFinished == false)
+  saveTasksHandler(updatedArray)
+  updatedArray.forEach(item => addTaskHandler(item))
+})

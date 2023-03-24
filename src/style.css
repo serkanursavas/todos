@@ -157,7 +157,7 @@ footer::before {
   text-decoration: underline;
 }
 
-#toggle-all {
+.toggle-all {
   position: relative;
   appearance: none;
   border: 2px solid transparent;
@@ -165,9 +165,6 @@ footer::before {
   height: 50px;
   color: #ededed;
   cursor: pointer;
-}
-#toggle-all:checked {
-  background: transparent;
 }
 
 #toggle-all::after {
@@ -190,6 +187,7 @@ footer::before {
   height: 30px;
   display: none;
   opacity: 0.5;
+  cursor: pointer;
 }
 
 .hover-delete-btn::after {
