@@ -29,46 +29,9 @@
           placeholder="What needs to be done?"
         />
       </form>
-      <ul id="task-list">
-        <li>
-          <input
-            type="checkbox"
-            class="checkbox"
-          />
-          <input
-            id="todo-item"
-            type="text"
-            value="Taste JavaScript"
-          />
-          <div class="hover-delete-btn"></div>
-        </li>
-        <li>
-          <input
-            type="checkbox"
-            class="checkbox"
-          />
-          <input
-            id="todo-item"
-            type="text"
-            value="Code furiously"
-          />
-          <div class="hover-delete-btn"></div>
-        </li>
-        <li>
-          <input
-            type="checkbox"
-            class="checkbox"
-          />
-          <input
-            id="todo-item"
-            type="text"
-            value="Write tutorials"
-          />
-          <div class="hover-delete-btn"></div>
-        </li>
-      </ul>
+      <ul id="task-list"></ul>
       <footer>
-        <span>6 items left</span>
+        <span id="itemsLeft"></span>
         <div class="buttonContainer">
           <button>All</button>
           <button>Active</button>
