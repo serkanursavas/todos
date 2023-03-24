@@ -21,6 +21,7 @@ h1 {
 }
 
 #container {
+  width: 600px;
   margin-top: 50px;
   background-color: #ffffff;
   border: 1px solid #ededed;
@@ -108,7 +109,7 @@ footer {
 footer::after {
   content: '';
   position: absolute;
-  width: 540px;
+  width: 585px;
   height: 5px;
   background-color: #fff;
   bottom: -7px;
@@ -122,7 +123,7 @@ footer::after {
 footer::before {
   content: '';
   position: absolute;
-  width: 535px;
+  width: 580px;
   height: 5px;
   background-color: #fff;
   bottom: -14px;
@@ -180,5 +181,50 @@ footer::before {
 }
 
 .clicked {
+  color: #4d4d4d;
+}
+
+.hover-delete-btn {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: none;
+  opacity: 0.5;
+}
+
+.hover-delete-btn::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 2px;
+  background-color: red;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.hover-delete-btn::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 2px;
+  background-color: red;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#task-list li:hover .hover-delete-btn {
+  display: block;
+}
+
+.hover-delete-btn:hover {
+  opacity: 1;
+}
+
+.completed-task {
+  text-decoration: line-through;
   color: #4d4d4d;
 }
